@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-black dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -6,9 +6,28 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                    <img src="{{ asset('/storage/images/LogoBind.svg') }}" alt="Logo de la aplicación" class="block h-9 w-auto">
                     </a>
                 </div>
+                <!-- Acá empieza el filtro de busqueda -->
+                <!-- Campo de búsqueda -->
+                    <div class="flex items-center">
+                        <form action="{{ route('search') }}" method="GET" class="flex items-center">
+                            <input
+                                type="text"
+                                name="query"
+                                placeholder="Buscar..."
+                                class="px-4 py-2 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                            <button
+                                type="submit"
+                                class="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                Buscar
+                            </button>
+                        </form>
+                    </div>
+                    <!-- Acá TERMINA el filtro de busqueda -->
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
