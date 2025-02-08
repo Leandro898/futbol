@@ -32,13 +32,13 @@
                 </form>
 
                                 <!-- Menú de Enlaces -->
-                <ul class="navbar-nav d-flex align-items-center justify-content-end flex-grow-1 mx-auto" style="margin-right: 15rem!important;">
+                <ul class="navbar-nav d-flex align-items-center justify-content-end flex-grow-1 mx-auto me-5">
                     <li class="nav-item me-3 text-center">
                         <a class="nav-link text-white d-flex flex-column align-items-center" href="{{ route('feed') }}">
                             <!-- Icono SVG -->
                             <img src="{{ asset('/storage/images/homex.svg') }}" alt="Inicio" style="width: 24px; height: 24px;" >
                             <!-- Texto -->
-                            <span class="mt-2">Inicio</span>
+                            Inicio
                         </a>
                     </li>
                     <li class="nav-item me-3 text-center">
@@ -46,7 +46,7 @@
                             <!-- Icono SVG -->
                             <img src="{{ asset('/storage/images/megaphone.svg') }}" alt="Búsquedas" style="width: 24px; height: 24px;">
                             <!-- Texto -->
-                            <span class="mt-2">Búsquedas</span>
+                            Búsquedas
                         </a>
                     </li>
                     <li class="nav-item me-3 text-center">
@@ -54,7 +54,7 @@
                             <!-- Icono SVG -->
                             <img src="{{ asset('/storage/images/bell.svg') }}" alt="Notificaciones" style="width: 24px; height: 24px;">
                             <!-- Texto -->
-                            <span class="mt-2">Notificaciones</span>
+                            Notificaciones
                         </a>
                     </li>
                     <li class="nav-item me-3 text-center">
@@ -62,13 +62,13 @@
                             <!-- Icono SVG -->
                             <img src="{{ asset('/storage/images/chat.svg') }}" alt="Mensajes" style="width: 24px; height: 24px;">
                             <!-- Texto -->
-                            <span class="mt-2">Mensajes</span>
+                            Mensajes
                         </a>
                     </li>
                 </ul>
 
                 <!-- Enlace de Perfil -->
-                <ul class="navbar-nav ms-auto d-flex align-items-center" style="margin-right: 5rem;">
+                <ul class="navbar-nav ms-auto d-flex align-items-center">
                     @if (Auth::check())
                         <li class="nav-item dropdown text-center position-relative">
                             <!-- Contenedor del ícono y el texto -->
@@ -80,7 +80,7 @@
                                 <img
                                     src="{{ asset('/storage/images/perfil.png') }}"
                                     alt="Foto de perfil"
-                                    class="rounded-circle"
+                                    class="rounded-circle mb-2"
                                     style="width: 35px; height: 35px;"
                                 >
                                 <!-- Texto "Mi perfil" -->
