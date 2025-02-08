@@ -12,7 +12,7 @@
                 <!-- Acá empieza el filtro de busqueda -->
                 <!-- Campo de búsqueda -->
                     <div class="flex items-center">
-                        <form action="{{ route('search') }}" method="GET" class="flex items-center">
+                        <form action="#" method="GET" class="flex items-center">
                             <input
                                 type="text"
                                 name="query"
