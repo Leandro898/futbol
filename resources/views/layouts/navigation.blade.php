@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <!-- Logo -->
         <a class="navbar-brand" href="{{ route('dashboard') }}">
-            <img src="{{ asset('/storage/images/LogoBind.svg') }}" alt="Logo de la aplicación" class="d-inline-block align-text-top" style="max-width: 200px; height: 36px;">
+            <img src="{{ asset('/storage/images/LogoBind.svg') }}" alt="Logo de la aplicación" class="d-inline-block align-text-top" style="max-width: 300px; height: 46px;">
         </a>
 
         <!-- Botón para Menú Colapsable (en pantallas pequeñas) -->
@@ -13,7 +13,7 @@
 
         <!-- Contenido del Menú -->
         <div class="collapse navbar-collapse" id="navbarNav">
-            <div class="d-flex align-items-center w-100">
+            <div class="d-flex align-items-center w-100 justify-content-between">
                 <!-- Campo de Búsqueda -->
                 <form action="#" method="GET" class="d-flex ms-3">
                     <input
@@ -31,9 +31,24 @@
                     </button>
                 </form>
 
-                <!-- Espaciado para Alinear Elementos a la Derecha -->
+                <!-- Menú de Enlaces -->
+                <ul class="navbar-nav d-flex align-items-center justify-content-end flex-grow-1 mx-auto me-5">
+                    <li class="nav-item me-3">
+                        <a class="nav-link text-white" href="{{ route('feed') }}">Inicio</a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link text-white" href="#">Búsquedas</a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link text-white" href="#">Notificaciones</a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link text-white" href="#">Mensajes</a>
+                    </li>
+                </ul>
+
+                <!-- Enlace de Perfil -->
                 <ul class="navbar-nav ms-auto d-flex align-items-center">
-                    <!-- Enlace de Perfil -->
                     @if (Auth::check())
                         <li class="nav-item dropdown">
                             <a
