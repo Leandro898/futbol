@@ -15,20 +15,21 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="d-flex align-items-center w-100 justify-content-between">
                 <!-- Campo de Búsqueda -->
-                <form action="#" method="GET" class="d-flex ms-3">
-                    <input
-                        type="text"
-                        name="query"
-                        placeholder="Buscar..."
-                        class="form-control rounded-start"
-                        style="min-width: 250px;"
-                    >
-                    <button
-                        type="submit"
-                        class="btn btn-success rounded-end"
-                    >
-                        Buscar
-                    </button>
+                <form action="#" method="GET" class="d-flex ms-3 position-relative" style="width: 250px;">
+                    <!-- Contenedor del Input -->
+                    <div class="position-relative w-100">
+                        <!-- Ícono de lupa dentro del input -->
+                        <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-2 text-muted"></i>
+                        <!-- Input redondeado -->
+                        <input
+                            type="text"
+                            name="query"
+                            placeholder=" Buscar..."
+                            class="form-control rounded-pill ps-4"
+                            style="min-width: 250px;"
+                            onkeydown="if(event.key === 'Enter') { this.form.submit(); }"
+                        >
+                    </div>
                 </form>
 
                                 <!-- Menú de Enlaces -->
