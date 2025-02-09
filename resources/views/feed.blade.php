@@ -1,37 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <textarea name="content" class="form-control mb-2" placeholder="Escribe algo..." required></textarea>
-        <input type="file" name="media" class="form-control mb-2">
-        <button type="submit" class="btn btn-primary">Publicar</button>
-    </form>
 
-    <hr>
-
-    @foreach($posts as $post)
-        <div class="card my-3">
-            <div class="card-body">
-                <p><strong>{{ $post->user->name }}</strong></p>
-                <p>{{ $post->content }}</p>
-                @if($post->media)
-                    <img src="{{ asset('storage/'.$post->media) }}" class="img-fluid">
-                @endif
-
-                <form action="{{ route('comment.store') }}" method="POST" class="mt-2">
-                    @csrf
-                    <input type="hidden" name="post_id" value="{{ $post->id }}">
-                    <input type="text" name="content" class="form-control" placeholder="Comentar..." required>
-                    <button type="submit" class="btn btn-sm btn-success mt-2">Comentar</button>
-                </form>
-
-                @foreach($post->comments as $comment)
-                    <p class="mt-2"><strong>{{ $comment->user->name }}:</strong> {{ $comment->content }}</p>
-                @endforeach
-            </div>
+<div class="container-fluid col-md-6 mt-5 " >
+    <div class="container">
+        <h2>Crear publicación</h2>
+        <div class="mb-3">
+            <label for="postContent" class="form-label">¿Quieres contarle algo a tu comunidad?</label>
+            <textarea id="postContent" class="form-control" rows="3" placeholder="Escribe algo..."></textarea>
         </div>
-    @endforeach
+        <div class="mb-3">
+            <button class="btn btn-outline-secondary">Multimedia</button>
+            <button class="btn btn-outline-secondary">Anuncio de búsqueda</button>
+            <button class="btn btn-outline-secondary">Crear evento</button>
+        </div>
+    </div>
 </div>
+
+
+
+
 @endsection
