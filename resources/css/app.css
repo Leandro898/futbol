@@ -13,9 +13,46 @@ body {
 
 /* Estilo para el ícono de perfil */
 .profile-icon {
-    width: 30px;
-    height: 30px;
+    width: 150px; /* Cambiado a 150px */
+    height: 150px; /* Cambiado a 150px */
     border-radius: 50%;
     object-fit: cover;
 }
 
+/* Estilo base para los enlaces */
+.nav-link {
+    color: white; /* Texto blanco */
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.nav-link .icon {
+    width: 24px;
+    height: 24px;
+    transition: filter 0.3s ease;
+}
+
+/* Efecto activo */
+.nav-link.active {
+    position: relative;
+    color: white; /* Texto sigue siendo blanco */
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -9px; /* Posición de la línea debajo del texto */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%; /* Ancho de la línea */
+    height: 3px; /* Grosor de la línea */
+    background-color: #42ea19; /* Color verde */
+}
+
+.nav-link.active .icon {
+    filter: brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(1175%) hue-rotate(81deg) brightness(104%) contrast(104%);
+    /* Cambia el color del ícono a verde */
+}

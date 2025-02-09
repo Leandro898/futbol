@@ -4,6 +4,9 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\MessageController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,3 +27,8 @@ require __DIR__.'/auth.php';
 Route::get('/', [PostController::class, 'index'])->name('feed');
 Route::post('/post', [PostController::class, 'store'])->name('post.store');
 Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
+
+// Rutas para los otros enlaces del menú
+Route::get('/searches', [SearchController::class, 'index'])->name('searches');
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
+Route::get('/messages', [MessageController::class, 'index'])->name('messages');

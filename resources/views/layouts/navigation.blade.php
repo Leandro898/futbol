@@ -34,33 +34,33 @@
                                 <!-- Menú de Enlaces -->
                 <ul class="navbar-nav d-flex align-items-center justify-content-end flex-grow-1 mx-auto" style="margin-right: 15rem!important;">
                     <li class="nav-item me-3 text-center">
-                        <a class="nav-link text-white d-flex flex-column align-items-center" href="{{ route('feed') }}">
+                        <a class="nav-link {{ request()->routeIs('feed') ? 'active' : '' }} nav-link  d-flex flex-column align-items-center" href="{{ route('feed') }}">
                             <!-- Icono SVG -->
-                            <img src="{{ asset('/storage/images/homex.svg') }}" alt="Inicio" style="width: 24px; height: 24px;" >
+                            <img src="{{ asset('/storage/images/homex.svg') }}" alt="Inicio" style="width: 24px; height: 24px;" class="icon">
                             <!-- Texto -->
                             <span class="mt-2">Inicio</span>
                         </a>
                     </li>
                     <li class="nav-item me-3 text-center">
-                        <a class="nav-link text-white d-flex flex-column align-items-center" href="#">
+                        <a class="nav-link {{ request()->routeIs('searches') ? 'active' : '' }} nav-link text-white d-flex flex-column align-items-center" href="{{ route('searches') }}">
                             <!-- Icono SVG -->
-                            <img src="{{ asset('/storage/images/megaphone.svg') }}" alt="Búsquedas" style="width: 24px; height: 24px;">
+                            <img src="{{ asset('/storage/images/megaphone.svg') }}" alt="Búsquedas" style="width: 24px; height: 24px;" class="icon">
                             <!-- Texto -->
                             <span class="mt-2">Búsquedas</span>
                         </a>
                     </li>
                     <li class="nav-item me-3 text-center">
-                        <a class="nav-link text-white d-flex flex-column align-items-center" href="#">
+                        <a class="nav-link {{ request()->routeIs('notifications') ? 'active' : '' }} nav-link text-white d-flex flex-column align-items-center" href="{{ route('notifications') }}">
                             <!-- Icono SVG -->
-                            <img src="{{ asset('/storage/images/bell.svg') }}" alt="Notificaciones" style="width: 24px; height: 24px;">
+                            <img src="{{ asset('/storage/images/bell.svg') }}" alt="Notificaciones" style="width: 24px; height: 24px;" class="icon">
                             <!-- Texto -->
                             <span class="mt-2">Notificaciones</span>
                         </a>
                     </li>
                     <li class="nav-item me-3 text-center">
-                        <a class="nav-link text-white d-flex flex-column align-items-center" href="#">
+                        <a class="nav-link {{ request()->routeIs('messages') ? 'active' : '' }} nav-link text-white d-flex flex-column align-items-center" href="{{ route('messages') }}">
                             <!-- Icono SVG -->
-                            <img src="{{ asset('/storage/images/chat.svg') }}" alt="Mensajes" style="width: 24px; height: 24px;">
+                            <img src="{{ asset('/storage/images/chat.svg') }}" alt="Mensajes" style="width: 24px; height: 24px;" class="icon">
                             <!-- Texto -->
                             <span class="mt-2">Mensajes</span>
                         </a>
