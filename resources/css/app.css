@@ -57,3 +57,11 @@ body {
     /* Cambia el color del ícono a verde */
 }
 
+/* Estilo para el textarea de una sola línea */
+.single-line-textarea {
+    resize: none; /* Desactiva la opción de redimensionar */
+    overflow: hidden; /* Oculta cualquier desbordamiento */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    height: auto; /* Ajusta automáticamente la altura */
+    line-height: 1.5; /* Ajusta la altura de la línea */
+}
