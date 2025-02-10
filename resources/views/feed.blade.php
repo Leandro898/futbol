@@ -6,7 +6,8 @@
     <div class="row py-3 px-3 mb-4 border-bottom">
         <h2>Crear publicación</h2>
         <div class="col-1">
-            <img src="{{ asset('/storage/images/perfil.png') }}" alt="Foto de perfil" style="max-width: 300px; height: 46px;">
+        
+        <img src="{{ asset('/storage/images/perfil.png') }}" alt="Foto de perfil" style="max-width: 300px; height: 46px;">
         </div>
         <div class="col-11">
             <div class="pb-2 mt-2">
@@ -32,26 +33,62 @@
         @if($posts->isEmpty())
             <p>No hay publicaciones disponibles.</p>
         @else
-            @foreach($posts as $post)
-                <div class="card mb-3 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $post->user->name }}</h5>
-                        <p class="card-text">{{ $post->content }}</p>
-                        @if($post->media)
-                            <div>
-                                @if(strpos($post->media, '.mp4') !== false)
-                                    <video controls style="max-width: 100%; height: auto;">
-                                        <source src="{{ asset('storage/images/' . $post->media) }}" type="video/mp4">
-                                        Tu navegador no soporta videos.
-                                    </video>
-                                @else
-                                    <img src="{{ asset('storage/images/' . $post->media) }}" alt="Media" style="max-width: 100%; height: auto;">
-                                @endif
+        @foreach($posts as $post)
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <!-- Contenedor principal con diseño flexbox -->
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <!-- Imagen del usuario y nombre -->
+                        <div class="d-flex align-items-center">
+                            <img src="{{ asset('storage/images/perfil.png') }}" alt="Foto de perfil" style="max-width: 300px; height: 46px;">
+                            <h5 class="card-title mb-0">{{ $post->user->name }}</h5>
+                        </div>
+                        <!-- Fecha de publicación -->
+                        <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
+                    </div>
+
+                    <!-- Contenido de la publicación -->
+                    <p class="card-text">{{ $post->content }}</p>
+
+                    <!-- Multimedia (imagen o video) -->
+                    @if($post->media)
+                        <div>
+                            @if(strpos($post->media, '.mp4') !== false)
+                                <video controls style="max-width: 100%; height: auto;">
+                                    <source src="{{ asset('storage/images/' . $post->media) }}" type="video/mp4">
+                                    Tu navegador no soporta videos.
+                                </video>
+                            @else
+                                <img src="{{ asset('storage/images/' . $post->media) }}" alt="Media" style="max-width: 100%; height: auto;">
+                            @endif
+                        </div>
+                    @endif
+
+                    <!-- Botones de interacción -->
+                    <div class="d-flex justify-content-between mt-3">
+                        <!-- Botones principales -->
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-primary btn-sm">Me gusta</button>
+                            <button class="btn btn-outline-success btn-sm">Enviar</button>
+                        </div>
+                        <!-- Botón para guardar publicación -->
+                        <button class="btn btn-outline-dark btn-sm">Guardar</button>
+                    </div>
+
+                    <!-- Formulario de comentarios -->
+                    <div class="mt-3">
+                        <form action="{{ route('comments.store') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="post_id" value="{{ $post->id }}">
+                            <div class="input-group">
+                                <textarea name="comment" class="form-control" rows="1" placeholder="Escribe un comentario..."></textarea>
+                                <button type="submit" class="btn btn-primary">Enviar</button>
                             </div>
-                        @endif
+                        </form>
                     </div>
                 </div>
-            @endforeach
+            </div>
+        @endforeach
         @endif
     </div>
 
