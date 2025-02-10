@@ -1,35 +1,59 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container-fluid col-md-6 mt-5 py-3 rounded shadow">
-    <div class="row py-3 px-3 ">
-        <!-- Acá se abre el modal -->
+    <!-- Caja de Publicaciones -->
+    <div class="row py-3 px-3 mb-4 border-bottom">
         <h2>Crear publicación</h2>
-        <div class="col-1 ">
-            <img src="{{ asset('/storage/images/perfil.png') }}" alt="" style="max-width: 300px; height: 46px;">
-            
+        <div class="col-1">
+            <img src="{{ asset('/storage/images/perfil.png') }}" alt="Foto de perfil" style="max-width: 300px; height: 46px;">
         </div>
-        <div class="col-11 ">
-            <div class="pb-2 mt-2" style="border-bottom: 2px solid;">
-                <a class="mt-2 text-decoration-none text-secondary"  data-bs-toggle="modal" data-bs-target="#createPostModal">
-                ¿Quieres contarle algo a tu comunidad?
+        <div class="col-11">
+            <div class="pb-2 mt-2">
+                <a class="mt-2 text-decoration-none text-secondary" data-bs-toggle="modal" data-bs-target="#createPostModal">
+                    ¿Quieres contarle algo a tu comunidad?
                 </a>
+            </div>
+            <!-- Enlaces adicionales -->
+            <div class="mt-4">
+                <a class="me-3" data-bs-toggle="modal" data-bs-target="#createPostModal">Multimedia</a>
+                <a class="me-3" data-bs-toggle="modal" data-bs-target="#createPostModal">Anuncio de búsqueda</a>
+                <a class="" data-bs-toggle="modal" data-bs-target="#createPostModal">Crear evento</a>
+            </div>
         </div>
-        <!-- Enlaces -->
-        <div class="mt-4">
-            <a class="me-3" data-bs-toggle="modal" data-bs-target="#createPostModal">
-                Multimedia
-            </a>
-            <a class="me-3" data-bs-toggle="modal" data-bs-target="#createPostModal">
-                Anuncio de búsqueda
-            </a>
-            <a class="" data-bs-toggle="modal" data-bs-target="#createPostModal">
-                Crear evento
-            </a>
-        </div>
-    </div>            
+    </div>
 </div>
+
+<!-- Publicaciones -->
+
+<!-- Lista de Publicaciones -->
+<div class="container col-md-6 rounded " style="margin-top: 100px;">
+        
+        @if($posts->isEmpty())
+            <p>No hay publicaciones disponibles.</p>
+        @else
+            @foreach($posts as $post)
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $post->user->name }}</h5>
+                        <p class="card-text">{{ $post->content }}</p>
+                        @if($post->media)
+                            <div>
+                                @if(strpos($post->media, '.mp4') !== false)
+                                    <video controls style="max-width: 100%; height: auto;">
+                                        <source src="{{ asset('storage/images/' . $post->media) }}" type="video/mp4">
+                                        Tu navegador no soporta videos.
+                                    </video>
+                                @else
+                                    <img src="{{ asset('storage/images/' . $post->media) }}" alt="Media" style="max-width: 100%; height: auto;">
+                                @endif
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        @endif
+    </div>
 
 <!-- Modal para crear una publicación -->
 <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
@@ -40,31 +64,32 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Textarea para el contenido de la publicación -->
-                <div class="mb-3">
-                    <textarea id="postContent" class="form-control single-line-textarea" rows="3" placeholder="¿Quieres contarle algo a tu comunidad?"></textarea>
-                </div>
-
-                <!-- Botón personalizado para cargar archivos multimedia -->
-                <div class="mb-3">
-                    <button id="uploadButton" class="btn btn-outline-secondary">Multimedia</button>
-                    <!-- Input de archivo oculto -->
-                    <input type="file" id="mediaInput" class="d-none" accept="image/*, video/*">
-                </div>
-
-                <!-- Contenedor para la previsualización -->
-                <div id="previewContainer" class="mb-3" style="display: none;">
-                    <p>Previsualización:</p>
-                    <div id="preview"></div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="publishButton">Publicar</button>
+                <!-- Formulario para crear una publicación -->
+                <form id="postForm" action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <!-- Textarea para el contenido -->
+                    <div class="mb-3">
+                        <textarea name="content" id="postContent" class="form-control single-line-textarea" rows="1" placeholder="¿Quieres contarle algo a tu comunidad?"></textarea>
+                    </div>
+                    <!-- Botón personalizado para cargar archivos multimedia -->
+                    <div class="mb-3">
+                        <button type="button" id="uploadButton" class="btn btn-outline-secondary">Multimedia</button>
+                        <input type="file" name="media" id="mediaInput" class="d-none" accept="image/*, video/*">
+                    </div>
+                    <!-- Contenedor para la previsualización -->
+                    <div id="previewContainer" class="mb-3" style="display: none;">
+                        <p>Previsualización:</p>
+                        <div id="preview"></div>
+                    </div>
+                    <!-- Botón de publicar -->
+                    <button type="submit" class="btn btn-primary">Publicar</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Script para manejar la carga de archivos y previsualización -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const uploadButton = document.getElementById('uploadButton');
@@ -80,12 +105,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Escuchar cambios en el input de archivos
     mediaInput.addEventListener('change', function (event) {
         const file = event.target.files[0]; // Obtener el archivo seleccionado
-
         if (file) {
             previewContainer.style.display = 'block'; // Mostrar el contenedor de previsualización
-
-            // Limpiar el contenedor de previsualización
-            preview.innerHTML = '';
+            preview.innerHTML = ''; // Limpiar el contenedor de previsualización
 
             // Crear un elemento para mostrar la previsualización
             if (file.type.startsWith('image/')) {
@@ -109,31 +131,6 @@ document.addEventListener('DOMContentLoaded', function () {
             previewContainer.style.display = 'none';
         }
     });
-
-    // Manejar el botón de publicar
-    const publishButton = document.getElementById('publishButton');
-    publishButton.addEventListener('click', function () {
-        const content = document.getElementById('postContent').value;
-        const file = mediaInput.files[0];
-
-        if (!content && !file) {
-            alert('Por favor, escribe algo o adjunta un archivo multimedia.');
-            return;
-        }
-
-        // Aquí puedes enviar los datos al servidor usando AJAX o un formulario
-        console.log('Contenido:', content);
-        console.log('Archivo:', file);
-
-        // Reiniciar el modal después de publicar
-        document.getElementById('postContent').value = '';
-        mediaInput.value = '';
-        previewContainer.style.display = 'none';
-        preview.innerHTML = '';
-    });
 });
 </script>
-
-
-
 @endsection

@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
 
 // Rutas de publicaciones
 Route::get('/feed', [PostController::class, 'index'])->name('feed');
-Route::post('/post', [PostController::class, 'store'])->name('post.store');
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
 
 // Rutas de vistas

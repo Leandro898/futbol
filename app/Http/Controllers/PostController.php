@@ -10,35 +10,33 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('user', 'comments.user')->latest()->get();
-        return view('feed', compact('posts'));
+        $posts = Post::latest()->get(); // Obtener las publicaciones ordenadas por fecha
+        return view('feed', compact('posts')); // Pasar las publicaciones a la vista
     }
 
-    public function store(Request $request)
+        // Guardar una nueva publicación
+        public function store(Request $request)
     {
-        // Verificar si el usuario está autenticado
-        if (!Auth::check()) { // ✅ Ahora sí funcionará
-            return redirect()->route('login')->with('error', 'Debes iniciar sesión para publicar.');
+        // Validar los datos del formulario
+        $request->validate([
+            'content' => 'nullable|string',
+            'media' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4|max:20480', // Archivos permitidos
+        ]);
+
+        // Crear una nueva publicación
+        $post = new Post();
+        $post->user_id = Auth::id(); // Asignar el ID del usuario autenticado
+        $post->content = $request->input('content');
+
+        // Manejar la carga de archivos multimedia
+        if ($request->hasFile('media')) {
+            $file = $request->file('media');
+            $path = $file->store('images', 'public'); // Guarda el archivo en public/storage/images
+            $post->media = basename($path); // Guarda solo el nombre del archivo (ejemplo: filename.jpg)
         }
 
-        // Validación de los datos
-        $validated = $request->validate([
-            'content' => 'required|string',
-            'media'   => 'nullable|image|max:2048', // Límite de 2MB para imágenes
-        ]);
+        $post->save();
 
-        // Procesar la imagen si existe
-        $mediaPath = $request->hasFile('media')
-            ? $request->file('media')->store('images', 'public')
-            : null;
-
-        // Crear el post
-        Post::create([
-            'user_id' => Auth::id(), 
-            'content' => $validated['content'],
-            'media'   => $mediaPath,
-        ]);
-
-        return redirect()->route('feed')->with('success', 'Publicación creada con éxito.');
+        return redirect()->route('feed')->with('success', 'Publicación creada exitosamente.');
     }
 }
