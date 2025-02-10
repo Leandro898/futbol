@@ -48,3 +48,6 @@ Route::get('/notifications', [NotificationController::class, 'index'])->name('no
 Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 
 require __DIR__.'/auth.php';
+
+// Ruta para guardar comentarios
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');

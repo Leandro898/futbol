@@ -10,8 +10,13 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->get(); // Obtener las publicaciones ordenadas por fecha
-        return view('feed', compact('posts')); // Pasar las publicaciones a la vista
+        // Obtener las publicaciones con sus comentarios y usuarios
+        $posts = Post::with(['comments.user'])->latest()->get();
+        return view('feed', compact('posts'));
+
+        // Metodo Index anterior
+        //$posts = Post::latest()->get(); // Obtener las publicaciones ordenadas por fecha
+        //return view('feed', compact('posts')); // Pasar las publicaciones a la vista
     }
 
         // Guardar una nueva publicación

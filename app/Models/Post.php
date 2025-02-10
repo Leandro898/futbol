@@ -29,7 +29,7 @@ class Post extends Model
         ]);
     }
 
-    // Relación con Comments
+    // Relación con Comment
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);

@@ -52,7 +52,7 @@
 
                     <!-- Multimedia (imagen o video) -->
                     @if($post->media)
-                        <div>
+                        <div class="container-fluid">
                             @if(strpos($post->media, '.mp4') !== false)
                                 <video controls style="max-width: 100%; height: auto;">
                                     <source src="{{ asset('storage/images/' . $post->media) }}" type="video/mp4">
@@ -68,13 +68,57 @@
                     <div class="d-flex justify-content-between mt-3">
                         <!-- Botones principales -->
                         <div class="d-flex gap-2">
-                            <button class="btn btn-outline-primary btn-sm">Me gusta</button>
-                            <button class="btn btn-outline-success btn-sm">Enviar</button>
+                            <a href="#"><img src="{{ asset('storage/images/megusta.svg') }}" alt="">
+                            </a>
+                            <a href="#"><img src="{{ asset('storage/images/responder.svg') }}" alt="">
+                            </a>
+                            <a href="#"><img src="{{ asset('storage/images/compartir.svg') }}" alt="">
+                            </a>
+                            
                         </div>
                         <!-- Botón para guardar publicación -->
-                        <button class="btn btn-outline-dark btn-sm">Guardar</button>
+                        <a href="#"><img src="{{ asset('storage/images/guardar.svg') }}" alt=""></a>
                     </div>
 
+                    
+
+                    <!-- Lista de comentarios -->
+                    <div class="mt-3">
+                        @if($post->comments->isEmpty())
+                            <p>No hay comentarios aún.</p>
+                        @else
+                            @foreach($post->comments as $comment)
+                                <div class="d-flex align-items-center mb-2">
+                                    <!-- Imagen del usuario -->
+                                    <img src="{{ asset('storage/images/user.jpg') }}" alt="Foto de perfil" style="max-width: 300px; height: 46px;">
+                                    
+                                    <!-- Nombre del usuario y contenido del comentario -->
+                                    <div class="flex-grow-1 ms-2">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong>{{ $comment->user->name }}</strong>
+                                                <p class="mb-0">{{ $comment->content }}</p>
+                                            </div>
+                                            <!-- Ícono de corazón para dar "Me gusta" al comentario -->
+                                <div class="d-flex justify-content-end mt-2">
+                                    <button class="btn btn-link text-danger p-0" onclick="likeComment({{ $comment->id }})">
+                                        <i class="fas fa-heart"></i> <!-- Ícono de corazón de FontAwesome -->
+                                    </button>
+                                </div>
+                                            
+                                        </div>
+                                        <!-- Fecha del comentario -->
+                                        <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
+                                        <!-- Botones de "Me gusta" y "Responder" En los comentarios -->
+                                        <a href="#" class="text-decoration-none">Me gusta</a>
+                                        <a href="#" class="text-decoration-none">Responder</a>
+                                    </div>
+                                </div>
+
+                                
+                            @endforeach
+                        @endif
+                    </div>
                     <!-- Formulario de comentarios -->
                     <div class="mt-3">
                         <form action="{{ route('comments.store') }}" method="POST">
@@ -86,6 +130,7 @@
                             </div>
                         </form>
                     </div>
+
                 </div>
             </div>
         @endforeach
@@ -169,5 +214,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+
+
+// Función para dar "Me gusta" a un comentario
+function likeComment(commentId) {
+    // Aquí puedes hacer una petición AJAX para guardar el "Me gusta" en la base de datos
+    console.log(`Me gusta el comentario con ID: ${commentId}`);
+    alert(`Me gusta el comentario con ID: ${commentId}`);
+}
+
+// Función para responder a un comentario
+function replyToComment(commentId) {
+    // Aquí puedes mostrar un formulario para responder al comentario
+    console.log(`Responder al comentario con ID: ${commentId}`);
+    alert(`Responder al comentario con ID: ${commentId}`);
+}
+
+
+
 </script>
 @endsection
